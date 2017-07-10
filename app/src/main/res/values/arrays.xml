@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="player_selection_list">
+        <item>@string/player_message</item>
+        <item>@string/computer_message</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Drop Token</string>
+    <string name="title_activity_game">@string/app_name</string>
+
+    <string name="title_player_selection">Choose who goes first!</string>
+    <string name="player_message">Me</string>
+    <string name="computer_message">Computer</string>
+    <string name="player_turn_message">Turn -> Me</string>
+    <string name="computer_turn_message">Turn -> Computer</string>
+    <string name="player_win_message">You\'ve won!</string>
+    <string name="computer_win_message">The Computer has won!</string>
+    <string name="draw_message">It\'s a draw!</string>
+    <string name="invalid_move_message">Invalid move, please try again.</string>
+    <string name="unexpected_error_message">An error has occurred.</string>
+</resources>
