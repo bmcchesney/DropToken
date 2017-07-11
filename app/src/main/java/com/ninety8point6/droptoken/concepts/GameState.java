@@ -1,5 +1,7 @@
 package com.ninety8point6.droptoken.concepts;
 
+import android.text.TextUtils;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -56,8 +58,7 @@ public final class GameState {
      */
     public GameState(final String key, final List<Integer> moves, final int player) {
 
-        Preconditions.checkArgument(key != null);
-        Preconditions.checkArgument(!key.isEmpty());
+        Preconditions.checkArgument(!TextUtils.isEmpty(key));
         Preconditions.checkArgument(VALID_PLAYERS.contains(player));
 
         mKey = key;
@@ -85,7 +86,7 @@ public final class GameState {
     public int currentPlayer() {
         return moves().size() % 2 == 0
                 ? mPlayer
-                : getNextPlayer(mPlayer);
+                : nextPlayer(mPlayer);
     }
 
     /**
@@ -102,7 +103,7 @@ public final class GameState {
      */
     public int lastPlayer() {
         return moves().size() % 2 == 0
-                ? getNextPlayer(mPlayer)
+                ? nextPlayer(mPlayer)
                 : mPlayer;
     }
 
@@ -113,7 +114,7 @@ public final class GameState {
      *
      * @return he next player
      */
-    public static int getNextPlayer(final int player) {
+    public static int nextPlayer(final int player) {
         if (player < VALID_PLAYERS.size() - 1) {
             return player + 1;
         }

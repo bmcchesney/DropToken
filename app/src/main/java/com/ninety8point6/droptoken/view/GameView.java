@@ -227,7 +227,7 @@ public class GameView implements View.OnClickListener {
             int count = tokenCounts.get(move, 0);
             setTokenState(currentPlayer, new Pair<>(count, move));
             tokenCounts.put(move, count + 1);
-            currentPlayer = GameState.getNextPlayer(currentPlayer);
+            currentPlayer = GameState.nextPlayer(currentPlayer);
         }
     }
 

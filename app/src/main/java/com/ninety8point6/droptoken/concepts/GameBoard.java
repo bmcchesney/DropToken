@@ -177,7 +177,7 @@ public final class GameBoard {
             board[--count][move] = currentPlayer;
             tokenCounts.put(move, count);
 
-            currentPlayer = GameState.getNextPlayer(currentPlayer);
+            currentPlayer = GameState.nextPlayer(currentPlayer);
         }
 
         return board;

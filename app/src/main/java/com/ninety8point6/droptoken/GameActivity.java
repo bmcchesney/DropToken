@@ -20,6 +20,7 @@ import com.ninety8point6.droptoken.service.SimpleGameService;
 import com.ninety8point6.droptoken.store.SharedPreferencesGameStore;
 import com.ninety8point6.droptoken.view.GameView;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import okhttp3.OkHttpClient;
@@ -47,25 +48,24 @@ public class GameActivity extends AppCompatActivity implements GameView.Delegate
         setContentView(R.layout.activity_game);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        final GameService service;
-        final GameStore store;
-        final GameView view;
-
+        final URL serviceUrl;
         try {
-            service = new SimpleGameService(new OkHttpClient(), new URL(ENDPOINT));
-            store = new SharedPreferencesGameStore(getApplicationContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE));
-            view = new GameView(getApplicationContext(),
+            serviceUrl = new URL(ENDPOINT);
+        } catch (final MalformedURLException ex) {
+            Log.e(TAG, "[onCreate] Unable create service endpoint... closing Activity.", ex);
+            finish();
+            return;
+        }
+
+        final GameService service = new SimpleGameService(new OkHttpClient(), serviceUrl);
+        final GameStore store = new SharedPreferencesGameStore(getApplicationContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE));
+        final GameView view = new GameView(getApplicationContext(),
                     getSupportFragmentManager(),
                     findViewById(R.id.board),
                     (ImageButton) findViewById(R.id.fab),
                     (ContentLoadingProgressBar) findViewById(R.id.progress_bar),
                     (TextView) findViewById(R.id.message),
                     this);
-        } catch (final Throwable throwable) {
-            Log.e(TAG, "[onCreate] Unable to initialize game.", throwable);
-            finish();
-            return;
-        }
 
         mManager = new SinglePlayerGameManager(getResources(),
                 service,

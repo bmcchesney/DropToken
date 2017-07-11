@@ -1,5 +1,7 @@
 package com.ninety8point6.droptoken.concepts;
 
+import com.google.common.base.Preconditions;
+
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -16,6 +18,7 @@ public final class TokenLocation {
      * @param column the column to drop the token
      */
     public TokenLocation(final int column) {
+        Preconditions.checkArgument(column >= 0);
         mColumn = column;
     }
 

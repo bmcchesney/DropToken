@@ -2,6 +2,7 @@ package com.ninety8point6.droptoken.game;
 
 import android.content.res.Resources;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.google.common.base.Preconditions;
@@ -27,6 +28,7 @@ import static com.ninety8point6.droptoken.concepts.GameState.PLAYER_1;
  * <p/>
  * All public APIs are assumed to have been invoked from the main UI thread.
  *
+ * TODO: Remove GameView dependency - Presenter with full delegation OR register observables
  * TODO: Add synchronization once more async implementations are available
  */
 public class SinglePlayerGameManager implements GameManager {
@@ -89,6 +91,9 @@ public class SinglePlayerGameManager implements GameManager {
         mService = Preconditions.checkNotNull(service);
         mStore = Preconditions.checkNotNull(store);
         mView = Preconditions.checkNotNull(view);
+
+        // Caller should be responsible here, but its worth a double check!
+        Preconditions.checkArgument(mainThreadHandler.getLooper() == Looper.getMainLooper());
         mMainThreadHandler = Preconditions.checkNotNull(mainThreadHandler);
     }
 
@@ -104,6 +109,8 @@ public class SinglePlayerGameManager implements GameManager {
 
     @Override
     public void play(final TokenLocation location) {
+
+        Preconditions.checkArgument(location != null);
 
         if (!mBoard.isLocationValid(location)) {
             mView.setMessage(mResources.getString(R.string.invalid_move_message));
